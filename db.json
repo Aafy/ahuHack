@@ -3,23 +3,23 @@
     {
       "fundName": "Tech Growth Fund",
       "funCode": "TGF123",
-      "security_name": "Apple Inc.",
-      "transaction_type": "BUY",
-      "order_value": 10000
+      "securityName": "Apple Inc.",
+      "transactionType": "BUY",
+      "orderValue": 10000
     },
     {
       "fundName": "Mutual Fund A",
       "funCode": "TGF345",
-      "security_name": "Amazon.com, Inc.",
-      "transaction_type": "SELL",
-      "order_value": 12000
+      "securityName": "Amazon.com, Inc.",
+      "transactionType": "SELL",
+      "orderValue": 12000
     },
     {
       "fundName": "Global Equity Fund",
       "funCode": "TGF456",
-      "security_name": "Caterpillar Inc.",
-      "transaction_type": "BUY",
-      "order_value": 8000
+      "securityName": "Caterpillar Inc.",
+      "transactionType": "BUY",
+      "orderValue": 8000
     }
   ]
 }
