@@ -11,6 +11,9 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { saveOrderEntries } from '../../store/order-entry.actions';
+import { IOrderEntry } from '../../store/order-entry.model';
 
 @Component({
   selector: 'app-order-entry',
@@ -20,7 +23,10 @@ import {
 })
 export class OrderEntryComponent {
   orderValue = 10000;
-  constructor(private orderEntryService: OrderEntryService) {}
+  constructor(
+    private orderEntryService: OrderEntryService,
+    private store: Store
+  ) {}
   orderEntryForm = new FormGroup({
     fundName: new FormControl('', [
       Validators.required,
@@ -31,7 +37,7 @@ export class OrderEntryComponent {
       this.securityNameValidator,
     ]),
     transactionType: new FormControl('', [Validators.required]),
-    quantity: new FormControl('', [Validators.required, Validators.min(1)]),
+    quantity: new FormControl(0, [Validators.required, Validators.min(1)]),
   });
 
   securityNameValidator(control: AbstractControl): ValidationErrors | null {
@@ -54,5 +60,19 @@ export class OrderEntryComponent {
 
   ngOnInit() {}
 
-  save() {}
+  save() {
+    const orderEntry: IOrderEntry = {
+      fundName: this.orderEntryForm.value.fundName,
+      securityName: this.orderEntryForm.value.securityName,
+      transactionType: this.orderEntryForm.value.transactionType,
+      quantity: this.orderEntryForm.value.quantity,
+      orderValue: this.orderValue,
+    };
+
+    this.store.dispatch(
+      saveOrderEntries({
+        orderEntry: orderEntry,
+      })
+    );
+  }
 }
