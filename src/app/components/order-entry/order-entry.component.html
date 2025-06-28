@@ -148,7 +148,13 @@
 
         <div class="mb-4">
           <label for="orderValue" class="form-label">Order Value</label>
-          <p class="form-control-plaintext">{{ orderValue }}</p>
+          <p class="form-control-plaintext">
+            {{
+              orderValue * orderEntryForm.get("quantity")?.value < 0
+                ? 0
+                : orderValue * orderEntryForm.get("quantity")?.value
+            }}
+          </p>
         </div>
 
         <button
@@ -165,12 +171,34 @@
 
 <h3>Order Entries</h3>
 
-<ul class="list-group">
-  <li class="list-group-item" *ngFor="let order of orderEntries$ | async">
-    <div>{{ order.fundName }}</div>
-    <div>{{ order.securityName }}</div>
-    <div>{{ order.transactionType }}</div>
-    <div>{{ order.quantity }}</div>
-    <div>{{ order.orderValue }}</div>
-  </li>
-</ul>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Fund Name</th>
+      <th scope="col">Security Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Gender</th>
+      <th scope="col">Communication</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let order of orderEntries$ | async; let i = index">
+      <!-- Making it bold -->
+      <th scope="row">{{ i }}</th>
+      <td>{{ order.fundName }}</td>
+      <td>{{ order.securityName }}</td>
+      <td>{{ order.transactionType }}</td>
+      <td>{{ order.quantity }}</td>
+      <td>{{ order.orderValue }}</td>
+
+      <td>
+        <!-- <i
+          (click)="delete(i)"
+          class="fa fa-trash"
+          aria-hidden="true"
+        ></i>
+      --></td>
+    </tr>
+  </tbody>
+</table>

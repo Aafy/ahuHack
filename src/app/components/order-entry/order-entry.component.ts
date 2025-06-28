@@ -70,7 +70,7 @@ export class OrderEntryComponent implements OnInit {
       securityName: this.orderEntryForm.value.securityName,
       transactionType: this.orderEntryForm.value.transactionType,
       quantity: this.orderEntryForm.value.quantity,
-      orderValue: this.orderValue,
+      orderValue: this.orderValue * this.orderEntryForm.value.quantity,
     };
 
     this.store.dispatch(
