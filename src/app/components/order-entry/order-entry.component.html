@@ -1,5 +1,3 @@
-<div class="cards-container"></div>
-
 <!-- Order Entry Form -->
 
 <div class="container mt-5">
@@ -164,3 +162,15 @@
     </div>
   </div>
 </div>
+
+<h3>Order Entries</h3>
+
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let order of orderEntries$ | async">
+    <div>{{ order.fundName }}</div>
+    <div>{{ order.securityName }}</div>
+    <div>{{ order.transactionType }}</div>
+    <div>{{ order.quantity }}</div>
+    <div>{{ order.orderValue }}</div>
+  </li>
+</ul>

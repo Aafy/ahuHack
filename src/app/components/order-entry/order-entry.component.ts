@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { OrderEntryService } from '../../service/order-entry-service';
 import { IFund, IFunds } from '../../models/funds.model';
 import { map, Observable } from 'rxjs';
@@ -11,9 +11,10 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { saveOrderEntries } from '../../store/order-entry.actions';
 import { IOrderEntry } from '../../store/order-entry.model';
+import { selectOrderEntries } from '../../store/order-entry.selector';
 
 @Component({
   selector: 'app-order-entry',
@@ -21,12 +22,15 @@ import { IOrderEntry } from '../../store/order-entry.model';
   templateUrl: './order-entry.component.html',
   styleUrl: './order-entry.component.scss',
 })
-export class OrderEntryComponent {
+export class OrderEntryComponent implements OnInit {
   orderValue = 10000;
+  orderEntries$: Observable<IOrderEntry[]>;
   constructor(
     private orderEntryService: OrderEntryService,
     private store: Store
-  ) {}
+  ) {
+    this.orderEntries$ = this.store.pipe(select(selectOrderEntries));
+  }
   orderEntryForm = new FormGroup({
     fundName: new FormControl('', [
       Validators.required,
