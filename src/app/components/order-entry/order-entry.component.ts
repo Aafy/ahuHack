@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderEntryService } from '../../service/order-entry-service';
 import { IFund, IFunds } from '../../models/funds.model';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import {
   AbstractControl,
@@ -25,6 +25,10 @@ import { selectOrderEntries } from '../../store/order-entry.selector';
 export class OrderEntryComponent implements OnInit {
   orderValue = 10000;
   orderEntries$: Observable<IOrderEntry[]>;
+  fund$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  funds: IFund[] = [];
+  s$ = Subscription.EMPTY;
+  enableOrderEntry: boolean = false;
   constructor(
     private orderEntryService: OrderEntryService,
     private store: Store
@@ -62,7 +66,14 @@ export class OrderEntryComponent implements OnInit {
     return null;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.s$ = this.orderEntryService
+      .getAllFunds()
+
+      .subscribe((funds) => {
+        this.funds = funds;
+      });
+  }
 
   save() {
     const orderEntry: IOrderEntry = {
@@ -78,5 +89,12 @@ export class OrderEntryComponent implements OnInit {
         orderEntry: orderEntry,
       })
     );
+  }
+
+  invokeOrderEntry() {
+    this.enableOrderEntry = true;
+  }
+  ngOnDestroy() {
+    this.s$.unsubscribe();
   }
 }

@@ -10,7 +10,7 @@ export class OrderEntryService {
   apiUrl = 'http://localhost:3000';
   constructor(private http: HttpClient) {}
 
-  getAllFunds(): Observable<IFunds> {
-    return this.http.get<IFunds>(`${this.apiUrl}/funds`);
+  getAllFunds(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/funds`);
   }
 }

@@ -1,6 +1,21 @@
 <!-- Order Entry Form -->
 
-<div class="container mt-5">
+<div class="fundCardContainer">
+  <ng-container *ngFor="let fund of funds">
+    <div class="fundcard">
+      <div class="card-header">
+        <h3 class="card-title">{{ fund.fundName }}</h3>
+        <div class="field">Security: {{ fund.securityName }}</div>
+        <div class="field">Value: {{ fund.orderValue }}</div>
+        <button class="action btn btn-primary" (click)="invokeOrderEntry()">
+          {{ fund.transactionType === "BUY" ? "BUY" : "REDEEM" }}
+        </button>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<div *ngIf="enableOrderEntry" class="container mt-5">
   <div class="card">
     <div class="card-header">
       <h3 class="card-title">Order Entry Form</h3>
@@ -169,36 +184,39 @@
   </div>
 </div>
 
-<h3>Order Entries</h3>
+<ng-container *ngIf="(orderEntries$ | async)?.length > 0">
+  <h3>Order Entries</h3>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Fund Name</th>
-      <th scope="col">Security Name</th>
-      <th scope="col">Email</th>
-      <th scope="col">Gender</th>
-      <th scope="col">Communication</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let order of orderEntries$ | async; let i = index">
-      <!-- Making it bold -->
-      <th scope="row">{{ i }}</th>
-      <td>{{ order.fundName }}</td>
-      <td>{{ order.securityName }}</td>
-      <td>{{ order.transactionType }}</td>
-      <td>{{ order.quantity }}</td>
-      <td>{{ order.orderValue }}</td>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Fund Name</th>
+        <th scope="col">Security Name</th>
+        <th scope="col">Transaction Type</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Order Value</th>
+        <!-- <th scope="col">Action</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orderEntries$ | async; let i = index">
+        <!-- Making it bold -->
+        <th scope="row">{{ i }}</th>
+        <td>{{ order.fundName }}</td>
+        <td>{{ order.securityName }}</td>
+        <td>{{ order.transactionType }}</td>
+        <td>{{ order.quantity }}</td>
+        <td>{{ order.orderValue }}</td>
 
-      <td>
-        <!-- <i
+        <td>
+          <!-- <i
           (click)="delete(i)"
           class="fa fa-trash"
           aria-hidden="true"
         ></i>
-      --></td>
-    </tr>
-  </tbody>
-</table>
+      -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-container>
