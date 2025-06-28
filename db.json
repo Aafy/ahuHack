@@ -1,4 +1,5 @@
 {
+  "securities": ["Apple Inc.", "Amazon.com, Inc.", "Caterpillar Inc."],
   "funds": [
     {
       "fundName": "Tech Growth Fund",

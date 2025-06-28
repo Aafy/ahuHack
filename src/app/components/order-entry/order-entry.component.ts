@@ -29,6 +29,7 @@ export class OrderEntryComponent implements OnInit {
   funds: IFund[] = [];
   s$ = Subscription.EMPTY;
   enableOrderEntry: boolean = false;
+  securities$: Observable<string[]>;
   constructor(
     private orderEntryService: OrderEntryService,
     private store: Store
@@ -73,6 +74,8 @@ export class OrderEntryComponent implements OnInit {
       .subscribe((funds) => {
         this.funds = funds;
       });
+
+    this.securities$ = this.orderEntryService.getAllSecurities();
   }
 
   save() {
